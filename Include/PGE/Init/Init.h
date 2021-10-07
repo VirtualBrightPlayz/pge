@@ -11,6 +11,9 @@ namespace Init {
     void init();
     void quit();
 
+#ifdef WIN32
+#undef main
+#endif
     int main(const std::vector<String>& args);
 }
 

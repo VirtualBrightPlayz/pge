@@ -1,6 +1,6 @@
 #include <PGE/Exception/Exception.h>
 
-#ifdef DEBUG
+#ifdef PGE_DEBUG
 #include <iostream>
 #endif
 
@@ -14,7 +14,7 @@ Exception::Exception(const String& file, int line, const String& extra) noexcept
         ex += '\n' + extra;
     }
     info = ex;
-#ifdef DEBUG
+#ifdef PGE_DEBUG
     std::cout << what() << std::endl;
 #endif
 }

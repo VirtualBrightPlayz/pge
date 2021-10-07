@@ -1,6 +1,6 @@
 #include <SDL.h>
 
-#ifndef DEBUG
+#if !defined(PGE_DEBUG) && defined(WIN32)
 #include <wtypes.h>
 #endif
 
@@ -16,7 +16,7 @@ using namespace PGE;
 
 #define PGE_ASSERT_SDL(CALL) PGE_ASSERT(CALL >= 0, SDL_GetError())
 
-#ifndef DEBUG
+#if !defined(PGE_DEBUG)
 static void showError(const String& exceptionType, const String& what) {
     TextWriter writer = TextWriter(FilePath::fromStr("exception.txt"));
     writer.writeLine(Info::REPO_LINK);
@@ -46,7 +46,7 @@ void Init::quit() {
     SDL_Quit();
 }
 
-#ifdef DEBUG
+#if (defined(PGE_DEBUG) && defined(WIN32)) || !defined(WIN32)
 int main(int argc, char** argv) {
 #else
 #pragma warning(push)
@@ -57,7 +57,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #endif
         Init::init();
 
-#ifndef DEBUG
+#if (!defined(PGE_DEBUG) && defined(WIN32)) || !defined(WIN32)
         int convArgc;
         char16** convArgv = CommandLineToArgvW(GetCommandLineW(), &convArgc);
 #else
@@ -75,7 +75,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         Init::quit();
         
         return retVal;
-#ifndef DEBUG
+#ifndef PGE_DEBUG
     } catch (const Exception& e) {
         showError("PGE::Exception", e.what());
     } catch (const std::exception& e) {

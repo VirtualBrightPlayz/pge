@@ -13,7 +13,9 @@ file(GLOB_RECURSE SOURCE_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/Libraries/glad/src/gl.c"
     )
 
-list(FILTER SOURCE_FILES EXCLUDE REGEX "DX11")
+if(WIN32)
+    list(FILTER SOURCE_FILES EXCLUDE REGEX "DX11")
+endif()
 
 add_compile_definitions(SDL_MAIN_HANDLED)
 
@@ -21,6 +23,9 @@ add_library(Engine STATIC)
 target_sources(Engine PUBLIC "${SOURCE_FILES}")
 
 target_link_libraries(Engine PUBLIC SDL2)
+if(WIN32)
+    target_link_libraries(Engine PUBLIC d3d11 dxgi dxguid)
+endif()
 
 target_include_directories(Engine
 PUBLIC

@@ -32,7 +32,7 @@ class D3D11Device : public DX11Resource<ID3D11Device*> {
     public:
         D3D11Device() {
             UINT creationFlags = 0;
-#ifdef DEBUG
+#ifdef PGE_DEBUG
             creationFlags |= D3D11_CREATE_DEVICE_FLAG::D3D11_CREATE_DEVICE_DEBUG;
 #endif
             PGE_ASSERT_DX(D3D11CreateDevice(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, creationFlags, NULL, 0, D3D11_SDK_VERSION,
