@@ -16,6 +16,12 @@
 #include <dirent.h>
 #endif
 
+#ifdef LINUX
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+#endif
+
 #include <PGE/Exception/Exception.h>
 #include <PGE/File/TextReader.h>
 
@@ -58,6 +64,9 @@ const FilePath& FilePath::getDataPath() {
         String path(filePath);
         CoTaskMemFree(filePath);
         dataPath = FilePath::fromStr(path);
+#elif defined(LINUX)
+        struct passwd* pw = getpwuid(getuid());
+        dataPath = FilePath::fromStr(String(pw->pw_dir));
 #endif
         dataPath = dataPath.makeDirectory();
     }
