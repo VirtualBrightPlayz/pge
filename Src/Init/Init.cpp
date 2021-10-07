@@ -57,7 +57,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #endif
         Init::init();
 
-#if (!defined(PGE_DEBUG) && defined(WIN32)) || !defined(WIN32)
+#if (!defined(PGE_DEBUG) && defined(WIN32))
         int convArgc;
         char16** convArgv = CommandLineToArgvW(GetCommandLineW(), &convArgc);
 #else
