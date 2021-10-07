@@ -13,7 +13,7 @@ file(GLOB_RECURSE SOURCE_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/Libraries/glad/src/gl.c"
     )
 
-if(WIN32)
+if(!WIN32)
     list(FILTER SOURCE_FILES EXCLUDE REGEX "DX11")
 endif()
 
