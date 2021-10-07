@@ -278,10 +278,13 @@ class String : private NoHeap {
         struct Unique {
             Data data;
             char chs[SHORT_STR_CAPACITY];
+        public:
+            Unique() { }
+            ~Unique() { }
         };
 
         // Default initialized with Unique.
-        std::variant<std::monostate, Unique, std::shared_ptr<Shared>> internalData;
+        std::variant<Unique, std::shared_ptr<Shared>, std::monostate> internalData;
         // TODO: Investigate whether calculating these instead is worth it.
         char* chs = std::get<Unique>(internalData).chs;
         Data* data = &std::get<Unique>(internalData).data;
