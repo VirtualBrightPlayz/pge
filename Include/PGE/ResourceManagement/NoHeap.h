@@ -1,6 +1,9 @@
 #ifndef PGE_NOHEAP_H_DEFINED
 #define PGE_NOHEAP_H_DEFINED
 
+#include <math.h>
+#include <stdint.h>
+
 namespace PGE {
 
 /// A mixin class intended to prevent straightforward heap allocation of a class.

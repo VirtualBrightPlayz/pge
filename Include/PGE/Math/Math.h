@@ -1,6 +1,8 @@
 ﻿#ifndef PGE_MATH_H_INCLUDED
 #define PGE_MATH_H_INCLUDED
 
+#include <math.h>
+
 namespace PGE {
 
 /// Various mathematical utility that is either not present,

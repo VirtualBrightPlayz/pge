@@ -19,7 +19,7 @@ class ResourceManager : private NoHeap {
         }
 
     public:
-        virtual ~ResourceManager();
+        ~ResourceManager();
 
         template <typename T, typename... Args>
         typename T::View addNewResource(Args&&... args) {

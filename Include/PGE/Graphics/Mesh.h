@@ -11,6 +11,7 @@
 #include <PGE/Math/Matrix.h>
 #include <PGE/StructuredData/StructuredData.h>
 #include <PGE/ResourceManagement/PolymorphicHeap.h>
+#include <PGE/Graphics/Material.h>
 
 namespace PGE {
 

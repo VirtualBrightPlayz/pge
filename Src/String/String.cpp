@@ -753,13 +753,13 @@ static F toFloatingPoint(const String& str, bool& success) {
 
     if (str.equalsIgnoreCase(POSITIVE_INFINITY)
         || str.equalsIgnoreCase(POSITIVE_INFINITY_LONG)
-        || str.equalsIgnoreCase(L"\u221E")) {
+        || str.equalsIgnoreCase("\u221E")) {
         return std::numeric_limits<F>::infinity();
     }
 
     if (str.equalsIgnoreCase(NEGATIVE_INFINITY)
         || str.equalsIgnoreCase(NEGATIVE_INFINITY_LONG)
-        || str.equalsIgnoreCase(L"-\u221E")) {
+        || str.equalsIgnoreCase("-\u221E")) {
         return -std::numeric_limits<F>::infinity();
     }
 

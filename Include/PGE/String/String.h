@@ -281,7 +281,7 @@ class String : private NoHeap {
         };
 
         // Default initialized with Unique.
-        std::variant<Unique, std::shared_ptr<Shared>, std::monostate> internalData;
+        std::variant<std::monostate, Unique, std::shared_ptr<Shared>> internalData;
         // TODO: Investigate whether calculating these instead is worth it.
         char* chs = std::get<Unique>(internalData).chs;
         Data* data = &std::get<Unique>(internalData).data;

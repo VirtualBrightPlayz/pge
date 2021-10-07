@@ -40,7 +40,7 @@ int StructuredData::ElemLayout::getElementSize() const {
 bool StructuredData::ElemLayout::operator==(const StructuredData::ElemLayout& other) const {
     if (this == &other) { return true; }
     if (elementSize != other.elementSize) { return false; }
-    return entries == other.entries;
+    return &entries == &other.entries;
 }
 
 StructuredData::StructuredData(const ElemLayout& ly, int elemCount) {

@@ -3,7 +3,7 @@
 using namespace PGE;
 
 TextWriter::TextWriter(const FilePath& file)
-	: AbstractIO(file, 0) { }
+	: AbstractIO(file, (std::ios_base::openmode)0) { }
 
 void TextWriter::write(const String& content) {
 	stream.write(content.cstr(), content.byteLength());
