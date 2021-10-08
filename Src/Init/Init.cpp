@@ -1,6 +1,6 @@
 #include <SDL.h>
 
-#if !defined(PGE_DEBUG) && defined(WIN32)
+#if !defined(PGE_DEBUG) && defined(_WIN32)
 #include <wtypes.h>
 #endif
 
@@ -46,7 +46,7 @@ void Init::quit() {
     SDL_Quit();
 }
 
-#if (defined(PGE_DEBUG) && defined(WIN32)) || !defined(WIN32)
+#if (defined(PGE_DEBUG) && defined(_WIN32)) || !defined(_WIN32)
 int main(int argc, char** argv) {
 #else
 #pragma warning(push)
@@ -57,7 +57,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #endif
         Init::init();
 
-#if (!defined(PGE_DEBUG) && defined(WIN32))
+#if (!defined(PGE_DEBUG) && defined(_WIN32))
         int convArgc;
         char16** convArgv = CommandLineToArgvW(GetCommandLineW(), &convArgc);
 #else
