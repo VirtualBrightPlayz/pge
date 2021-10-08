@@ -1,4 +1,4 @@
-#ifdef _WIN32
+#if defined(_WIN32) && defined(_D3D)
 #include "GraphicsDX11.h"
 #endif
 #include "GraphicsOGL3.h"
@@ -59,7 +59,7 @@ GraphicsInternal::SDLWindow::~SDLWindow() {
 
 Graphics* Graphics::create(const String& name, int w, int h, WindowMode wm, std::optional<Renderer> r, int x, int y) {
     if (!r.has_value()) {
-#ifdef _WIN32
+#if defined(_WIN32) && defined(_D3D)
         r = Renderer::DirectX11;
 #else
         r = Renderer::OpenGL;
@@ -67,7 +67,7 @@ Graphics* Graphics::create(const String& name, int w, int h, WindowMode wm, std:
     }
     Graphics* gfx;
     switch (r.value()) {
-#ifdef _WIN32
+#if defined(_WIN32) && defined(_D3D)
         case Renderer::DirectX11: {
             gfx = new GraphicsDX11(name, w, h, wm, x, y);
         } break;

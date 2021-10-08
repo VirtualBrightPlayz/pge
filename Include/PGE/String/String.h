@@ -268,15 +268,21 @@ class String : private NoHeap {
             mutable u64 _hashCode;
             mutable int _strLength = -1;
             mutable bool _hashCodeEvaluted = false;
+        public:
+            Data() { }
+            ~Data() { }
         };
 
         struct Shared {
             Data data;
             std::unique_ptr<char[]> chs;
+        public:
+            Shared() { }
+            ~Shared() { }
         };
 
         struct Unique {
-            Data data;
+            Data data = Data();
             char chs[SHORT_STR_CAPACITY];
         public:
             Unique() { }
@@ -284,7 +290,7 @@ class String : private NoHeap {
         };
 
         // Default initialized with Unique.
-        std::variant<Unique, std::shared_ptr<Shared>, std::monostate> internalData;
+        std::variant<Unique, std::shared_ptr<Shared>, std::monostate> internalData = std::variant<Unique, std::shared_ptr<Shared>, std::monostate>();
         // TODO: Investigate whether calculating these instead is worth it.
         char* chs = std::get<Unique>(internalData).chs;
         Data* data = &std::get<Unique>(internalData).data;

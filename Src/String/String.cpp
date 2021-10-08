@@ -511,9 +511,10 @@ void String::reallocate(int size, bool copyOldChs) {
 
     // Initialized with String literal.
     if (data->cCapacity == 0) {
+        initLiteral(size);
         if (size <= SHORT_STR_CAPACITY) {
             Unique& u = internalData.emplace<Unique>();
-            if (copyOldChs) {
+            if (copyOldChs && data->strByteLength > 0) {
                 memcpy(u.chs, chs, data->strByteLength);
             }
             u.data = *data;
