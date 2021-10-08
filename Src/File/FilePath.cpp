@@ -201,7 +201,8 @@ const String FilePath::readText() const {
         reader.readLine(ret);
         ret += '\n';
     }
-    return ret;
+    // Get rid of excess '\n'
+    return ret.substr(0, ret.length() - 1);
 }
 
 const std::vector<String> FilePath::readLines(bool includeEmptyLines) const {
