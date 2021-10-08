@@ -174,6 +174,10 @@ const std::vector<FilePath> FilePath::enumerateFolders() const {
     return folders;
 }
 
+const bool sortFileNames(FilePath left, FilePath right) {
+    return left.str().compare(right.str()) > 0;
+}
+
 const std::vector<FilePath> FilePath::enumerateFiles(bool recursive) const {
     PGE_ASSERT(valid, INVALID_STR);
     std::vector<FilePath> files;
@@ -190,6 +194,7 @@ const std::vector<FilePath> FilePath::enumerateFiles(bool recursive) const {
             }
         }
     }
+    std::stable_sort(files.begin(), files.end(), sortFileNames);
     return files;
 }
 

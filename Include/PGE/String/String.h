@@ -249,6 +249,8 @@ class String : private NoHeap {
         bool equalsIgnoreCase(const String& other) const;
         bool isEmpty() const;
 
+        const int compare(const String& other) const;
+
     private:
         static constexpr u64 FNV_SEED = 0xcbf29ce484222325;
 
@@ -310,6 +312,8 @@ class String : private NoHeap {
 };
 bool operator==(const String& a, const String& b);
 bool operator!=(const String& a, const String& b);
+bool operator<(const String& a, const String& b);
+bool operator>(const String& a, const String& b);
 std::ostream& operator<<(std::ostream& os, const String& s);
 std::istream& operator>>(std::istream& is, String& s);
 

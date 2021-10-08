@@ -32,7 +32,7 @@ class FilePath : private NoHeap {
         /// 
         /// MacOS: Volumes/User/*user*/Library/Application Support/
         /// 
-        /// Linux: TODO
+        /// Linux: $HOME/
         static const FilePath& getDataPath();
 
         /// Returns whether two paths are considered equal.

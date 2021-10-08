@@ -503,6 +503,29 @@ bool String::isEmpty() const {
     return chs[0] == '\0';
 }
 
+const int String::compare(const String& other) const {
+    int ret = 0;
+    int big = this->length() > other.length() ? this->length() : other.length();
+    int small = this->length() < other.length() ? this->length() : other.length();
+    for (int i = 0; i < big; i++) {
+        if (i >= small) {
+            ret++;
+            continue;
+        }
+        char16 mych = *this->charAt(i);
+        char16 otherch = *other.charAt(i);
+        if (mych < otherch) {
+            ret++;
+            break;
+        }
+        else if (mych > otherch) {
+            ret--;
+            break;
+        }
+    }
+    return ret;
+}
+
 void String::reallocate(int size, bool copyOldChs) {
     // Accounting for the terminating byte.
     size++;
