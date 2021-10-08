@@ -9,6 +9,8 @@ MeshOGL3::MeshOGL3(Graphics& gfx) : resourceManager(gfx), graphics((GraphicsOGL3
     glIndexBufferObject = resourceManager.addNewResource<GLBuffer>();
 
     glVertexArrayObject = resourceManager.addNewResource<GLVertexArray>();
+
+    clearGeometry();
 }
 
 void MeshOGL3::prepareVertexOperation() {

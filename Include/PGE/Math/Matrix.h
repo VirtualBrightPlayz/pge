@@ -39,7 +39,11 @@ class Matrix4x4f : private NoHeap {
             );
         }
         // TODO: Custom trigonometric function implementation?
+#ifdef _WIN32
         static const Matrix4x4f rotate(const Vector3f& rotation) {
+#else
+        static constexpr const Matrix4x4f rotate(const Vector3f& rotation) {
+#endif
             float sinPitch = sin(rotation.x);
             float sinYaw = sin(rotation.y);
             float sinRoll = sin(rotation.z);
