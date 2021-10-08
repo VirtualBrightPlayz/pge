@@ -57,9 +57,9 @@ void Mesh::clearGeometry() {
 
 void Mesh::setMaterial(Material* m) {
     PGE_ASSERT(
-        m == nullptr ||
+        !(m == nullptr ||
         vertices.getDataSize() <= 0 ||
-        m->getShader().getVertexLayout() == vertices.getLayout(),
+        m->getShader().getVertexLayout() == vertices.getLayout()),
         "Can't set material with mismatched vertex layout without discarding"
     );
     material = m;
