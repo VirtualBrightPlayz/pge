@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Libraries\SPIRV-Reflect\spirv_reflect.c" />
     <ClCompile Include="..\..\Src\Exception\Exception.cpp" />
     <ClCompile Include="..\..\Src\File\BinaryReader.cpp" />
     <ClCompile Include="..\..\Src\File\BinaryWriter.cpp" />
@@ -29,15 +30,20 @@
     <ClCompile Include="..\..\Src\Graphics\GraphicsDX11.cpp" />
     <ClCompile Include="..\..\Src\Graphics\GraphicsInternal.cpp" />
     <ClCompile Include="..\..\Src\Graphics\GraphicsOGL3.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\GraphicsVK.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\Material\MaterialVK.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Material\Material.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Mesh\Mesh.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Mesh\MeshDX11.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Mesh\MeshOGL3.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\Mesh\MeshVK.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Shader\ShaderDX11.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Shader\ShaderOGL3.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\Shader\ShaderVK.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Texture\Texture.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Texture\TextureDX11.cpp" />
     <ClCompile Include="..\..\Src\Graphics\Texture\TextureOGL3.cpp" />
+    <ClCompile Include="..\..\Src\Graphics\Texture\TextureVK.cpp" />
     <ClCompile Include="..\..\Src\Info\Info.cpp" />
     <ClCompile Include="..\..\Src\Init\Init.cpp" />
     <ClCompile Include="..\..\Src\Input\Input.cpp" />
@@ -45,6 +51,7 @@
     <ClCompile Include="..\..\Src\Math\Random.cpp" />
     <ClCompile Include="..\..\Src\ResourceManagement\ResourceManager.cpp" />
     <ClCompile Include="..\..\Src\ResourceManagement\ResourceManagerOGL3.cpp" />
+    <ClCompile Include="..\..\Src\ResourceManagement\ResourceManagerVK.cpp" />
     <ClCompile Include="..\..\Src\String\String.cpp" />
     <ClCompile Include="..\..\Src\String\Unicode.cpp" />
     <ClCompile Include="..\..\Src\String\UnicodeHelper.cpp" />
@@ -91,22 +98,30 @@
     <ClInclude Include="..\..\Include\PGE\StructuredData\StructuredData.h" />
     <ClInclude Include="..\..\Include\PGE\SysEvents\SysEvents.h" />
     <ClInclude Include="..\..\Include\PGE\Types\Types.h" />
+    <ClInclude Include="..\..\Libraries\SPIRV-Reflect\spirv_reflect.h" />
     <ClInclude Include="..\..\Src\Graphics\GraphicsDX11.h" />
     <ClInclude Include="..\..\Src\Graphics\GraphicsInternal.h" />
     <ClInclude Include="..\..\Src\Graphics\GraphicsOGL3.h" />
+    <ClInclude Include="..\..\Src\Graphics\GraphicsVK.h" />
+    <ClInclude Include="..\..\Src\Graphics\Material\MaterialVK.h" />
     <ClInclude Include="..\..\Src\Graphics\Mesh\MeshDX11.h" />
     <ClInclude Include="..\..\Src\Graphics\Mesh\MeshOGL3.h" />
+    <ClInclude Include="..\..\Src\Graphics\Mesh\MeshVK.h" />
     <ClInclude Include="..\..\Src\Graphics\Shader\ShaderDX11.h" />
     <ClInclude Include="..\..\Src\Graphics\Shader\ShaderOGL3.h" />
+    <ClInclude Include="..\..\Src\Graphics\Shader\ShaderVK.h" />
     <ClInclude Include="..\..\Src\Graphics\Texture\TextureDX11.h" />
     <ClInclude Include="..\..\Src\Graphics\Texture\TextureOGL3.h" />
+    <ClInclude Include="..\..\Src\Graphics\Texture\TextureVK.h" />
     <ClInclude Include="..\..\Src\Input\InputManagerInternal.h" />
     <ClInclude Include="..\..\Src\ResourceManagement\DX11.h" />
     <ClInclude Include="..\..\Src\ResourceManagement\OGL3.h" />
     <ClInclude Include="..\..\Src\ResourceManagement\ResourceManagerOGL3.h" />
+    <ClInclude Include="..\..\Src\ResourceManagement\ResourceManagerVK.h" />
+    <ClInclude Include="..\..\Src\ResourceManagement\VK.h" />
+    <ClInclude Include="..\..\Src\SysEvents\SysEventsInternal.h" />
     <ClInclude Include="..\..\Src\String\UnicodeInternal.h" />
     <ClInclude Include="..\..\Src\String\UnicodeHelper.h" />
-    <ClInclude Include="..\..\Src\SysEvents\SysEventsInternal.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -160,18 +175,18 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../../Include;../../Libraries/SDL2/include;../../Libraries/glad/include</IncludePath>
+    <IncludePath>../../Include;../../Libraries/SDL2/include;../../Libraries/glad/include;$(VK_SDK_PATH)/Include;../../Libraries/SPIRV-Reflect/</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(WindowsSDK_IncludePath);../../Include;../../Libraries/SDL2/include;../../Libraries/glad/include;$(IncludePath)</IncludePath>
+    <IncludePath>../../Include;../../Libraries/SDL2/include;../../Libraries/glad/include;$(VK_SDK_PATH)/Include;../../Libraries/SPIRV-Reflect/</IncludePath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../../Include;../../Libraries/SDL2/include;../../Libraries/glad/include</IncludePath>
+    <IncludePath>../../Include;../../Libraries/SDL2/include;../../Libraries/glad/include;$(VK_SDK_PATH)/Include;../../Libraries/SPIRV-Reflect/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(WindowsSDK_IncludePath);../../Include;../../Libraries/SDL2/include;../../Libraries/glad/include;$(IncludePath)</IncludePath>
+    <IncludePath>../../Include;../../Libraries/SDL2/include;../../Libraries/glad/include;$(VK_SDK_PATH)/Include;../../Libraries/SPIRV-Reflect/</IncludePath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -218,7 +233,7 @@ echo const String Info::COMMIT = "%GIT_COMMIT%";
 echo Generated %25CD%\Info.cpp!</Command>
     </PreBuildEvent>
     <Lib>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;$(SolutionDir)$(Platform)/$(Configuration)/glad.lib;$(SolutionDir)$(Platform)/$(Configuration)/SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;$(SolutionDir)$(Platform)/$(Configuration)/glad.lib;$(SolutionDir)$(Platform)/$(Configuration)/SDL2.lib;$(VK_SDK_PATH)/Lib/vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -264,7 +279,7 @@ echo const String Info::COMMIT = "%GIT_COMMIT%";
 echo Generated %25CD%\Info.cpp!</Command>
     </PreBuildEvent>
     <Lib>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;$(SolutionDir)$(Platform)/$(Configuration)/glad.lib;$(SolutionDir)$(Platform)/$(Configuration)/SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;$(SolutionDir)$(Platform)/$(Configuration)/glad.lib;$(SolutionDir)$(Platform)/$(Configuration)/SDL2.lib;$(VK_SDK_PATH)/Lib/vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -315,7 +330,7 @@ echo const String Info::COMMIT = "%GIT_COMMIT%";
 echo Generated %25CD%\Info.cpp!</Command>
     </PreBuildEvent>
     <Lib>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;$(SolutionDir)$(Platform)/$(Configuration)/glad.lib;$(SolutionDir)$(Platform)/$(Configuration)/SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;$(SolutionDir)$(Platform)/$(Configuration)/glad.lib;$(SolutionDir)$(Platform)/$(Configuration)/SDL2.lib;$(VK_SDK_PATH)/Lib/vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -366,7 +381,7 @@ echo const String Info::COMMIT = "%GIT_COMMIT%";
 echo Generated %25CD%\Info.cpp!</Command>
     </PreBuildEvent>
     <Lib>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;$(SolutionDir)$(Platform)/$(Configuration)/glad.lib;$(SolutionDir)$(Platform)/$(Configuration)/SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;$(SolutionDir)$(Platform)/$(Configuration)/glad.lib;$(SolutionDir)$(Platform)/$(Configuration)/SDL2.lib;$(VK_SDK_PATH)/Lib/vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -30,8 +30,8 @@ class Program {
         Mesh* mesh;
         Material* mat;
 
-        Mesh* mesh2;
         Shader* shader2;
+        Mesh* mesh2;
         Texture* tex;
         Material* mat2;
 
@@ -46,7 +46,7 @@ class Program {
         InputManager* inputManager;
         KeyboardInput* escKey;
 
-        u64 counter;
+        u64 counter = 0;
         Clock::time_point prev = Clock::now();
 
         bool closeRequested = false;
@@ -64,8 +64,7 @@ class Program {
 
     public:
         Program() {
-            graphics = Graphics::create("Example 3", 1000, 500, Graphics::WindowMode::Windowed, Graphics::Renderer::DirectX11);
-            graphics->setCulling(Graphics::Culling::BACK);
+            graphics = Graphics::create("Example 3", 1000, 500, Graphics::WindowMode::Windowed, Graphics::Renderer::Vulkan);
 
             inputManager = InputManager::create(*graphics);
             escKey = new KeyboardInput(KeyboardInput::Keycode::ESCAPE);
@@ -87,17 +86,6 @@ class Program {
             mesh->setGeometry(std::move(vertices), Mesh::PrimitiveType::TRIANGLE, { 0, 1, 2, 1, 2, 3 });
 
             shader2 = Shader::load(*graphics, FilePath::fromStr("Shader3.2"));
-            
-            std::vector<byte> bytes = FilePath::fromStr("logo.bmp").readBytes();
-            u32 headerOffset = *(u32*)&bytes[0x000A];
-            for (int i = headerOffset; i < bytes.size() - 4; i += 4) {
-                for (int j = 0; j < 3; j++) {
-                    bytes[i + j] = bytes[i + j + 1];
-                }
-                bytes[i + 3] = 255;
-            }
-            int dim = sqrt((bytes.size() - headerOffset) / 4);
-            tex = Texture::load(*graphics, dim, dim, bytes.data() + headerOffset, Texture::Format::RGBA32);
             
             vertices = StructuredData(shader2->getVertexLayout(), 4);
             vertices.setValue(0, "position", Vector2f(0, 0));

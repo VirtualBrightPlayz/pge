@@ -2,6 +2,7 @@
 #include "GraphicsDX11.h"
 #endif
 #include "GraphicsOGL3.h"
+#include "GraphicsVK.h"
 
 #if defined(__APPLE__) && defined(__OBJC__)
 #import <Foundation/Foundation.h>
@@ -74,6 +75,9 @@ Graphics* Graphics::create(const String& name, int w, int h, WindowMode wm, std:
 #endif
         case Renderer::OpenGL: {
             gfx = new GraphicsOGL3(name, w, h, wm, x, y);
+        } break;
+        case Renderer::Vulkan: {
+            gfx = new GraphicsVK(name, w, h, wm, x, y);
         } break;
         default: {
             gfx = nullptr;

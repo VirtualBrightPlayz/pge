@@ -117,6 +117,9 @@
     <ClCompile Include="..\..\Src\Graphics\GraphicsInternal.cpp">
       <Filter>Src\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Graphics\GraphicsVK.cpp">
+      <Filter>Src\Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\ResourceManagement\ResourceManager.cpp">
       <Filter>Src\ResourceManagement</Filter>
     </ClCompile>
@@ -125,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\String\Unicode.cpp">
       <Filter>Src\String</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\ResourceManagement\ResourceManagerVK.cpp">
+      <Filter>Src\ResourceManagement</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Input\Input.cpp">
       <Filter>Src\Input</Filter>
@@ -183,8 +189,21 @@
     <ClCompile Include="..\..\Src\StructuredData\StructuredData.cpp">
       <Filter>Src\StructuredData</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Graphics\Mesh\MeshVK.cpp">
+      <Filter>Src\Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Graphics\Shader\ShaderVK.cpp">
+      <Filter>Src\Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Graphics\Texture\TextureVK.cpp">
+      <Filter>Src\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\SPIRV-Reflect\spirv_reflect.c" />
     <ClCompile Include="..\..\Src\String\UnicodeManual.cpp">
       <Filter>Src\String</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Graphics\Material\MaterialVK.cpp">
+      <Filter>Src\Graphics\Material</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Graphics\Material\Material.cpp">
       <Filter>Src\Graphics\Material</Filter>
@@ -320,6 +339,15 @@
     <ClInclude Include="..\..\Include\PGE\String\Key.h">
       <Filter>Include\String</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Graphics\GraphicsVK.h">
+      <Filter>Src\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\ResourceManagement\ResourceManagerVK.h">
+      <Filter>Src\ResourceManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\ResourceManagement\VK.h">
+      <Filter>Src\ResourceManagement</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Include\PGE\String\String.h">
       <Filter>Include\String</Filter>
     </ClInclude>
@@ -349,6 +377,19 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\PGE\String\Unicode.h">
       <Filter>Include\String</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Graphics\Mesh\MeshVK.h">
+      <Filter>Src\Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Graphics\Shader\ShaderVK.h">
+      <Filter>Src\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Graphics\Texture\TextureVK.h">
+      <Filter>Src\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Libraries\SPIRV-Reflect\spirv_reflect.h" />
+    <ClInclude Include="..\..\Src\Graphics\Material\MaterialVK.h">
+      <Filter>Src\Graphics\Material</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

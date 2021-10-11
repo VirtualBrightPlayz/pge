@@ -75,7 +75,6 @@ GraphicsDX11::GraphicsDX11(const String& name, int w, int h, WindowMode wm, int 
     currentDepthStencilView = dxZBufferView;
 
     depthTest = true;
-    vsync = true;
 }
 
 void GraphicsDX11::swap() {

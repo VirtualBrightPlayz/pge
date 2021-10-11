@@ -22,6 +22,7 @@ class Graphics : private PolymorphicHeap {
         enum class Renderer {
             OpenGL,
             DirectX11,
+            Vulkan,
         };
 
         enum class WindowMode {
