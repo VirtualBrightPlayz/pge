@@ -73,14 +73,21 @@ namespace PGE {
                         FLOAT,
                         INT
                     } valueType;
-                    union {
-                        Matrix4x4f matrixVal = Matrices::ZERO;
+                    union U {
+                        Matrix4x4f matrixVal;
                         Vector2f vector2fVal;
                         Vector3f vector3fVal;
                         Vector4f vector4fVal;
                         Color colorVal;
                         float floatVal;
                         int intVal;
+                        U() {
+                            matrixVal = Matrices::ZERO;
+                            vector2fVal = Vector2f();
+                            vector3fVal = Vector3f();
+                            vector4fVal = Vector4f();
+                            colorVal = Color();
+                        }
                     } val;
 
                     ShaderVK* shader;

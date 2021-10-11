@@ -268,7 +268,7 @@ void ShaderOGL3::useShader() {
         glEnableVertexAttribArray(glAttribLocation.location);
         glVertexAttribPointer(glAttribLocation.location, glAttribLocation.elementCount, glAttribLocation.elementType, GL_FALSE, vertexLayout.getElementSize(), ptr + locationAndSizeInBuffer.location);
         glError = glGetError();
-        PGE_ASSERT(glError == GL_NO_ERROR, "Failed to set vertex attribute (filepath: " + filepath.str() + "; attrib: " + String::hexFromInt(key.hash) + ")");
+        PGE_ASSERT(glError == GL_NO_ERROR, "Failed to set vertex attribute (glError: " + String::hexFromInt(glError) + "; filepath: " + filepath.str() + "; attrib: " + String::hexFromInt(key.hash) + ")");
     }
 
     for (auto& [_, constant] : vertexShaderConstants) {

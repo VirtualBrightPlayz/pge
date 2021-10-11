@@ -296,8 +296,8 @@ class VKMemory : public VKFreeResource<vk::DeviceMemory> {
             } else if constexpr (std::is_same<T, vk::Buffer>::value) {
                 memReq = device.getBufferMemoryRequirements(data);
             } else {
-                static_assert(false);
-            } 
+                PGE_ASSERT(false, "Type isn't vk::Buffer or vk::Image");
+            }
 
             // Finding a fitting memory type.
             int memIndex = -1;
@@ -322,7 +322,7 @@ class VKMemory : public VKFreeResource<vk::DeviceMemory> {
             } else if constexpr (std::is_same<T, vk::Buffer>::value) {
                 device.bindBufferMemory(data, resource, 0);
             } else {
-                static_assert(false);
+                PGE_ASSERT(false, "Type isn't vk::Buffer or vk::Image");
             }
         }
 };

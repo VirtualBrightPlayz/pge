@@ -62,6 +62,8 @@ Graphics* Graphics::create(const String& name, int w, int h, WindowMode wm, std:
     if (!r.has_value()) {
 #if defined(_WIN32) && defined(_D3D)
         r = Renderer::DirectX11;
+#elif defined(_VKR)
+        r = Renderer::Vulkan;
 #else
         r = Renderer::OpenGL;
 #endif
