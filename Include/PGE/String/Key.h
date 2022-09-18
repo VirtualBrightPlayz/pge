@@ -9,6 +9,7 @@ struct String::Key {
     Key() = default;
     Key(const String& str) : hash(str.getHashCode()) { }
     size_t hash;
+    bool operator==(const String::Key& other) const = default;
 };
 
 struct String::RedundantKey {

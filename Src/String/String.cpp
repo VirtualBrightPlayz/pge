@@ -1,3 +1,4 @@
+#include <PGE/String/Key.h>
 #include <PGE/String/String.h>
 #include <PGE/String/Unicode.h>
 #include "UnicodeInternal.h"
@@ -12,6 +13,7 @@
 
 #include <PGE/Exception/Exception.h>
 #include <PGE/Math/Hasher.h>
+#include <PGE/Math/Math.h>
 
 using namespace PGE;
 
@@ -74,25 +76,29 @@ int String::BasicIterator::getPosition() const {
     return charIndex;
 }
 
-String::Iterator& String::Iterator::operator++() {
+template <> String::Iterator& String::Iterator::operator++() {
     PGE_ASSERT(index < ref->byteLength(), "Tried incrementing end iterator");
     increment();
     return *this;
 }
 
-String::Iterator& String::Iterator::operator--() {
+template <> String::Iterator& String::Iterator::operator--() {
     PGE_ASSERT(index > 0, "Tried decrementing begin iterator");
     decrement();
     return *this;
 }
 
-String::ReverseIterator& String::ReverseIterator::operator++() {
+template <> String::ReverseIterator& String::ReverseIterator::operator++() {
     PGE_ASSERT(index >= 0, "Tried decrementing end reverse iterator");
     decrement();
     return *this;
 }
 
-String::ReverseIterator& String::ReverseIterator::operator--() {
+template <> String::Iterator String::Iterator::end(const String& str) {
+    return String::Iterator(str, str.byteLength(), str.getData()->_strLength);
+}
+
+template <> String::ReverseIterator& String::ReverseIterator::operator--() {
     PGE_ASSERT(index < String::Iterator::end(*ref).index, "Tried incrementing begin reverse iterator");
     increment();
     return *this;
@@ -100,29 +106,27 @@ String::ReverseIterator& String::ReverseIterator::operator--() {
 
 const inline String INVALID_ITERATOR = "Tried reversing invalid iterator";
 
-void String::Iterator::validate() {
+template <> void String::Iterator::validate() {
+    return;
     PGE_ASSERT(index >= 0, INVALID_ITERATOR);
 }
 
-void String::ReverseIterator::validate() {
+template <> void String::ReverseIterator::validate() {
     PGE_ASSERT(index < ref->byteLength(), INVALID_ITERATOR);
 }
 
-String::Iterator String::Iterator::begin(const String& str) {
+template <> String::Iterator String::Iterator::begin(const String& str) {
     return String::Iterator(str, 0, 0);
-}
-
-template <> String::Iterator String::Iterator::end(const String& str) {
-    return String::Iterator(str, str.byteLength(), str.getData()->_strLength);
-}
-
-String::ReverseIterator String::ReverseIterator::begin(const String& str) {
-    return str.isEmpty() ? end(str) : (ReverseIterator)(Iterator::end(str) - 1);
 }
 
 template <> String::ReverseIterator String::ReverseIterator::end(const String& str) {
     return String::ReverseIterator(str, -1, -1);
 }
+
+template <> String::ReverseIterator String::ReverseIterator::begin(const String& str) {
+    return str.isEmpty() ? end(str) : (ReverseIterator)(Iterator::end(str) - 1);
+}
+
 
 String::Iterator String::begin() const {
     return Iterator::begin(*this);
@@ -336,6 +340,29 @@ u64 String::getHashCode() const {
         data->_hashCode = Hasher::getHash(std::span((byte*)cstr(), byteLength()));
     }
     return data->_hashCode;
+}
+
+const int String::compareInt(const String& other) const {
+    int ret = 0;
+    int big = this->length() > other.length() ? this->length() : other.length();
+    int small = this->length() < other.length() ? this->length() : other.length();
+    for (int i = 0; i < big; i++) {
+        if (i >= small) {
+            ret++;
+            continue;
+        }
+        char16 mych = *this->charAt(i);
+        char16 otherch = *other.charAt(i);
+        if (mych < otherch) {
+            ret++;
+            break;
+        }
+        else if (mych > otherch) {
+            ret--;
+            break;
+        }
+    }
+    return ret;
 }
 
 std::weak_ordering String::compare(const String& other) const {
@@ -1003,8 +1030,8 @@ String String::regexMatch(const String& pattern) const {
     // TODO: C++23 will add support for char8_t and/or deprecate std::regex
     // We will have to react accordingly. Perhaps implementing our own regex matcher.
     std::vector<char16> s = wstr();
-    std::wcmatch m;
-    std::regex_search(s.data(), m, std::wregex(pattern.wstr().data()));
+    std::match_results<const char16*> m;
+    std::regex_search(s.data(), m, std::basic_regex<char16>(pattern.wstr().data()));
 
     s[m.position() + m.length()] = '\0';
     String ret(s.data() + m.position());

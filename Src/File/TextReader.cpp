@@ -1,6 +1,7 @@
 #include <PGE/File/TextReader.h>
 
 #include "../String/UnicodeHelper.h"
+#include <iostream>
 
 using namespace PGE;
 
@@ -45,13 +46,13 @@ String TextReader::readLine() {
 void TextReader::readLine(String& dest) {
     // readChar takes care of checking for EOL.
     char16 ch = readChar();
-    while (!eof && ch != L'\r' && ch != L'\n') {
+    while (!eof && ch != u'\r' && ch != u'\n') {
         dest += ch;
         ch = readChar();
     }
     if (!eof) {
         // Pure carriage return linebreak are a thing!
-        char16 checkChar = ch == L'\r' ? L'\n' : L'\r';
+        char16 checkChar = ch == u'\r' ? u'\n' : u'\r';
         // Eat the next character and spit it out if its not a continuaton of the EOL.
         if (checkChar != readChar()) {
             spitOut(checkChar);
@@ -139,7 +140,7 @@ void TextReader::spitOut(char16 ch) {
         stream.rdbuf()->sungetc();
     }
     // Clear EOF.
-    eof = false;
+    // eof = false;
 }
 
 void TextReader::reportEOF() {

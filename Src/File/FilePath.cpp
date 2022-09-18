@@ -14,6 +14,12 @@
 #include <dirent.h>
 #endif
 
+#ifdef LINUX
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+#endif
+
 #include <PGE/Exception/Exception.h>
 #include <PGE/File/TextReader.h>
 
@@ -56,6 +62,9 @@ FilePath& FilePath::getDataPath() {
         String path(filePath);
         CoTaskMemFree(filePath);
         dataPath = FilePath::fromStr(path);
+#elif defined(LINUX)
+        struct passwd* pw = getpwuid(getuid());
+        dataPath = FilePath::fromStr(String(pw->pw_dir));
 #endif
         dataPath = dataPath.makeDirectory();
     }
@@ -171,6 +180,10 @@ bool FilePath::createDirectory() const {
     return created;
 }
 
+const bool sortFileNames(FilePath left, FilePath right) {
+    return left.str().compareInt(right.str()) > 0;
+}
+
 std::vector<FilePath> FilePath::enumerateFolders() const {
     PGE_ASSERT(valid, INVALID_STR);
     std::vector<FilePath> folders;
@@ -179,6 +192,7 @@ std::vector<FilePath> FilePath::enumerateFolders() const {
             folders.emplace_back(FilePath(it.path()));
         }
     }
+    std::stable_sort(folders.begin(), folders.end(), sortFileNames);
     return folders;
 }
 
@@ -198,6 +212,7 @@ std::vector<FilePath> FilePath::enumerateFiles(bool recursive) const {
             }
         }
     }
+    std::stable_sort(files.begin(), files.end(), sortFileNames);
     return files;
 }
 

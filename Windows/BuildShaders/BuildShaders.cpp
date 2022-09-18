@@ -240,7 +240,7 @@ int main(int argc, char** argv) {
 
     std::vector<FilePath> shaderPaths = FilePath::fromStr(folderName).enumerateFiles();
 
-#if 0
+#if 1
 #pragma message ("RECOMPILATION IS ENABLED!!!")
     std::cout << "Recompiling..." << std::endl;
     recompile = true;

@@ -1,9 +1,9 @@
 project(Engine)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_STANDARD_REQUIRED True)
+# set(CMAKE_CXX_STANDARD 20)
+# set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# set(CMAKE_C_STANDARD 11)
+# set(CMAKE_C_STANDARD_REQUIRED ON)
 
 add_subdirectory(Libraries/SDL2)
 add_subdirectory(Windows/BuildShaders)
@@ -60,7 +60,7 @@ target_sources(Engine PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/SysEvents/SysEventsInternal.h
     )
 
-target_link_libraries(Engine PUBLIC SDL2)
+target_link_libraries(Engine PUBLIC SDL2-static)
 if(WIN32 AND PGE_D3D)
     target_link_libraries(Engine PUBLIC d3d11 dxgi dxguid)
 endif()

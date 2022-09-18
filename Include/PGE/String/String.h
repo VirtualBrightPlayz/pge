@@ -25,6 +25,20 @@ concept ValidBaseForType = BASE == 10 && std::integral<T> || std::unsigned_integ
 
 class String;
 
+struct Metadata {
+    // Lazily evaluated.
+    mutable u64 _hashCode = 0;
+    mutable int _strLength = -1;
+
+    int strByteLength = -1;
+
+    // _hashCode = 0;
+    // _strLength = -1;
+    // strByteLength = -1;
+    // Metadata() noexcept = default;
+    // Metadata() noexcept {} // this is required as per a bug in gcc and clang (https://stackoverflow.com/questions/53408962/try-to-understand-compiler-error-message-default-member-initializer-required-be)
+};
+
 inline namespace StringLiterals {
     String operator""_PGE(const char* cstr, size_t size);
     String operator""_PGE(const char8_t* cstr, size_t size);
@@ -42,7 +56,8 @@ class String {
                 using pointer = value_type*;
                 using reference = value_type&;
 
-                BasicIterator() = default;
+                // BasicIterator() = default;
+                // BasicIterator(){}
 
                 int operator-(const BasicIterator& other) const;
 
@@ -78,7 +93,8 @@ class String {
                 void validate();
 
             public:
-                ActualIterator() = default;
+                // ActualIterator() = default;
+                ActualIterator(){}
 
                 ActualIterator(const ActualIterator<!REVERSE>& reversed) {
                     ref = reversed.ref;
@@ -121,8 +137,8 @@ class String {
 
         using Iterator = ActualIterator<false>;
         using ReverseIterator = ActualIterator<true>;
-        static_assert(std::bidirectional_iterator<Iterator>);
-        static_assert(std::bidirectional_iterator<ReverseIterator>);
+        // static_assert(std::bidirectional_iterator<Iterator>);
+        // static_assert(std::bidirectional_iterator<ReverseIterator>);
 
         Iterator begin() const;
         Iterator end() const;
@@ -158,6 +174,10 @@ class String {
 
         String(const char8_t* cstr);
         String(const char16* wstr);
+#ifndef WIN32
+        String(const wchar_t* wstr)
+            : String() { }
+#endif
 
         String(const std::string& cppstr);
 #if defined(__APPLE__) && defined(__OBJC__)
@@ -166,6 +186,10 @@ class String {
         String(char c);
         String(char8_t c);
         String(char16 w);
+#ifndef WIN32
+        String(wchar_t w)
+            : String((char16)w) { }
+#endif
 
         String(const String& a, const String& b);
 
@@ -289,6 +313,7 @@ class String {
 
         u64 getHashCode() const;
 
+        const int compareInt(const String& other) const;
         std::weak_ordering compare(const String& other) const;
 
         bool equals(const String& other) const;
@@ -296,20 +321,29 @@ class String {
         bool isEmpty() const;
 
     private:
-        struct Metadata;
+        // struct Metadata;
+        using Metadata = Metadata;
         String(int sz, char*& charBuffer, Metadata*& data);
         String(const char* cstr, size_t size);
         String(const String& other, int from, int cnt);
 
         static constexpr int SHORT_STR_CAPACITY = 40;
 
+        /*
         struct Metadata {
             // Lazily evaluated.
             mutable u64 _hashCode = 0;
             mutable int _strLength = -1;
 
             int strByteLength = -1;
+
+            // _hashCode = 0;
+            // _strLength = -1;
+            // strByteLength = -1;
+            // Metadata() noexcept = default;
+            // Metadata() noexcept {} // this is required as per a bug in gcc and clang (https://stackoverflow.com/questions/53408962/try-to-understand-compiler-error-message-default-member-initializer-required-be)
         };
+        */
 
         struct CoreInfo {
             char* cstrBuf;
@@ -323,6 +357,7 @@ class String {
             CoreInfo get() {
                 return { cstrBuf.get(), &data };
             }
+            // HeapAllocData() = default;
         };
 
         struct StackAllocData {
@@ -331,6 +366,7 @@ class String {
             CoreInfo get() {
                 return { cstrBuf, &data };
             }
+            // StackAllocData() = default;
         };
 
         struct LiteralData {
@@ -347,10 +383,16 @@ class String {
             const CoreInfo get() {
                 return { cstrBuf, getData() };
             }
+            // LiteralData() = default;
         };
+
+        // static_assert(!std::is_default_constructible<StackAllocData>());
+        // static_assert(!std::is_default_constructible<std::shared_ptr<HeapAllocData>>());
+        // static_assert(!std::is_default_constructible<LiteralData>());
 
         // Default initialized with Unique.
         mutable std::variant<StackAllocData, std::shared_ptr<HeapAllocData>, LiteralData> internalData;
+        // mutable std::variant<StackAllocData, HeapAllocData*, LiteralData> internalData;
 
         char* getChars() const;
         Metadata* getData() const;
@@ -365,14 +407,15 @@ class String {
         template <std::floating_point F>
         static String fromFloatingPoint(F f);
 };
+
 String operator+(const String& a, const String& b);
 String operator+(String&& a, const String& b);
 bool operator==(const String& a, const String& b);
 std::ostream& operator<<(std::ostream& os, const String& s);
 std::istream& operator>>(std::istream& is, String& s);
 
-static_assert(std::ranges::bidirectional_range<String>);
-static_assert(std::ranges::common_range<String>);
+// static_assert(std::ranges::bidirectional_range<String>);
+// static_assert(std::ranges::common_range<String>);
 
 }
 

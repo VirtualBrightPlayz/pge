@@ -3,6 +3,7 @@
 #include <chrono>
 
 #include <PGE/Exception/Exception.h>
+#include <PGE/Math/Math.h>
 
 using namespace PGE;
 
@@ -63,7 +64,7 @@ namespace PGE {
             v2 = 2 * nextFloat() - 1;
             s = v1 * v1 + v2 * v2;
         } while (s >= 1 || s == 0);
-        return v1 * std::sqrt(-2 * std::log(s) / s);
+        return v1 * sqrt(-2 * log(s) / s);
     }
 
     float Random::nextGaussian(float mean, float standardDeviation) {
